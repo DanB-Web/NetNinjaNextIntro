@@ -17,11 +17,11 @@ Net Ninja Next JS Intro
 
 ## Benefits
 
-- React is a Client Side Rendered (CSR) technology - SSR and SSG can often be quicker as there is less processing on the browser side. There are also SEO benefits (web crawlers get full HTML back rather than an emtpy React hook).
+- React is a Client Side Rendered (CSR) technology - SSR and SSG can often be quicker as there is less processing on the browser side. There are also SEO benefits (web crawlers get full HTML back rather than an empty React hook).
 
 # Environment + Setup
 
-To start a Next project, run `npx create-next-app foldername/projectname` - this will boilerplate a new Next application. Note the `npx` command lalows us to run commands directly from the internet (rather than `npm`).
+To start a Next project, run `npx create-next-app foldername/projectname` - this will boilerplate a new Next application. Note the `npx` command allows us to run commands directly from the internet (rather than `npm`).
 
 ## Boilerplate Walk Through
 
@@ -39,7 +39,7 @@ Inside the package.json we have access to three scripts:
 
 ## Routing
 
-Any new file in the pages folder will automatically have a route created. For example, if you create a new `about.js` file, the browser will automaticzlly be redirected there as `localhost:3000/about`.
+Any new file in the pages folder will automatically have a route created. For example, if you create a new `about.js` file, the browser will automatically be redirected there as `localhost:3000/about`.
 
 Note the only exception is `index.js`, which will always be on the `localhost:3000/` route.
 
@@ -51,7 +51,7 @@ Note that if there is an `index.js` file in a subfolder, the subfolder route wil
 
 As well as the page components, we can also 'drop in' smaller custom components as required (navbars, cards etc). These can then be reused inside multiple pages.
 
-We would normally use a dedicated folder inside the project root (note - not inside the `pages` directory).
+We would normally use a dedicated folder inside the project root to hold our components (note - not inside the `pages` directory).
 
 We can then import these components into our pages (or nested into other components) in the normal React/JS way.
 
@@ -101,3 +101,19 @@ Next 10 introduced the concept of an _image component._ This has a couple of adv
 2. It takes advantage of _lazy loading_ - it will only load when an image is 'scrolled' into view, makimng the page even faster.
 
 'Metadata' sits in the `head' of a normal HTML document, allowing us to set the page title and add other metadata for SEO. We can import the native Next head component and add it to our pages. Note that we have to render the entire component return inside a single element, as in React - we can use _React fragments_ to do this if we are including headers.
+
+## Fetching Data (getStaticProps)
+
+In a normal React application, we would use a hook such as `useEffect` to call an API or server to collect data. However, in Next, we would prefer to have the data already 'in' the page at render time. Next provides us with the `getStaticProps` method, which allows us to execute code (such as a _fetch_ request) at render time, before the page is sent to the browser.
+
+The `getStaticProps` method is called on each page render, and allows the page to be populated with external data before the user sees it. The method returns a `props` object, including any custom data, that can then be destructured in the component parenthesis and accessed in the normal way.
+
+## Dynamic Routing (getStaticPaths)
+
+Next builds all your pages at build time, and so if you have something dynamic (i.e. user profile pages), you need to tell next how many there are going to be. We can use the `getStaticPath` method to create an object that Next can use to determine this.
+
+Note the `[id].js` file inside the `ninjas` directory - the square brackets denote that this is a _dynamic_ route, and can be passed props to make it unique.
+
+## Build
+
+To build your app, run `npm run build` - this will place all your build assets into the `next` folder.
